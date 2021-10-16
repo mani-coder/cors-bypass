@@ -1,0 +1,4 @@
+*.pyc
+.env.yaml
+.venv
+deploy.sh
