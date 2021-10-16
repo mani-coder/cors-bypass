@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import urlparse, ParseResult
 
 import requests
 
@@ -6,7 +7,6 @@ import requests
 from flask import Response
 from flask import current_app as app
 from flask.wrappers import Request
-from werkzeug.datastructures import HeaderSet
 
 logger = app.logger
 DEBUG = app.config["DEBUG"]
@@ -31,11 +31,11 @@ EXCLUDED_HEADERS = [
 
 def main(request: Request):
     url = f"{request.path[1:]}?{request.query_string.decode('utf-8')}"
+    parsed_url: ParseResult = urlparse(url)
+    url = f"{parsed_url.scheme}:/{parsed_url.path}?{parsed_url.query}"
+
     logger.info(f"URL: {url}")
 
-    import pprint
-
-    pprint.pprint(request.headers)
     resp = requests.request(
         method=request.method,
         url=url,
@@ -48,7 +48,7 @@ def main(request: Request):
     headers = HEADERS + [
         (name, value)
         for (name, value) in resp.raw.headers.items()
-        if name.lower() not in excluded_headers
+        if name.lower() not in EXCLUDED_HEADERS
     ]
 
     response = Response(
