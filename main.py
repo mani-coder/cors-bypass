@@ -10,8 +10,7 @@ from flask.wrappers import Request
 
 logger = app.logger
 DEBUG = app.config["DEBUG"]
-if DEBUG:
-    logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
 
 
 HEADERS = [
@@ -30,22 +29,22 @@ EXCLUDED_HEADERS = [
 
 
 def main(request: Request):
-    # if request.method == "OPTIONS":
-    #     # Allows any requests from any origin with the Content-Type
-    #     # header and caches preflight response for an 360000s
-    #     headers = {
-    #         "Access-Control-Allow-Origin": "*",
-    #         "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS,HEAD,CONNECT",
-    #         "Access-Control-Allow-Headers": "Content-Type",
-    #         "Access-Control-Max-Age": "360000",
-    #     }
+    if request.method == "OPTIONS":
+        # Allows any requests from any origin with the Content-Type
+        # header and caches preflight response for an 360000s
+        headers = {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS,HEAD,CONNECT",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Max-Age": "360000",
+        }
 
-    #     return ("", 204, headers)
+        return ("", 204, headers)
 
     if len(request.path) <= 1:
         return "OK", 200
 
-    url = f"{request.path[1:]}?{request.query_string.decode('utf-8')}"
+    url = request.args.url
     parsed_url: ParseResult = urlparse(url)
     url = "{scheme}:{slash}{domain}{path}{query}".format(
         scheme=parsed_url.scheme,
