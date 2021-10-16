@@ -44,7 +44,7 @@ def main(request: Request):
     if len(request.path) <= 1:
         return "OK", 200
 
-    url = request.args.url
+    url = f"{request.path[1:]}?{request.query_string.decode('utf-8')}"
     parsed_url: ParseResult = urlparse(url)
     url = "{scheme}:{slash}{domain}{path}{query}".format(
         scheme=parsed_url.scheme,
