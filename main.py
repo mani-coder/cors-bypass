@@ -1,5 +1,5 @@
 import logging
-from urllib.parse import urlparse, ParseResult
+from urllib.parse import ParseResult, urlparse
 
 import requests
 
@@ -30,6 +30,9 @@ EXCLUDED_HEADERS = [
 
 
 def main(request: Request):
+    if len(request.path) <= 1:
+        return "OK", 200
+
     url = f"{request.path[1:]}?{request.query_string.decode('utf-8')}"
     parsed_url: ParseResult = urlparse(url)
     url = f"{parsed_url.scheme}:/{parsed_url.path}?{parsed_url.query}"
