@@ -8,7 +8,9 @@ For example:
 Original URL: https://portfolio.nasdaq.com/api/portfolio/getPortfolioEvents/?fromDate=2021-10-16&toDate=2022-02-16&tickers=BIDU
 
 To fetch data using cors-bypass, you need to use the URL like below:
+```
 https://us-central1-mani-coder.cloudfunctions.net/cors-bypass/https:/portfolio.nasdaq.com/api/portfolio/getPortfolioEvents/?fromDate=2021-10-16&toDate=2022-02-16&tickers=BIDU
+```
 
 Simply you have to do this in your code:
 https://us-central1-mani-coder.cloudfunctions.net/cors-bypass/<url_to_fetch_data.replace('//', '/')>
@@ -17,4 +19,12 @@ https://us-central1-mani-coder.cloudfunctions.net/cors-bypass/<url_to_fetch_data
 export function buildCorsFreeUrl(target: string): string {
   return `https://us-central1-mani-coder.cloudfunctions.net/cors-bypass/${target.replace('//', '/')}`;
 }
+
+fetch(
+   buildCorsFreeUrl("https://api-to-fetch/")
+).then(
+   ...  
+).catch(
+   ...
+)
 ```
