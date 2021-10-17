@@ -3,14 +3,14 @@
   "name": "cors-bypass",
   "builds": [
     {
-      "src": "nodejs/index.js",
+      "src": "src/index.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "nodejs/index.js"
+      "dest": "build/index.js"
     }
   ]
 }

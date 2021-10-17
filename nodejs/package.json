@@ -6,8 +6,8 @@
   "scripts": {
     "start:dev": "nodemon",
     "vercel-build": "npm run build",
-    "build": "rimraf index.js && tsc",
-    "start": "node index.js",
+    "build": "rimraf ./build && tsc",
+    "start": "node ./build/index.js",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
