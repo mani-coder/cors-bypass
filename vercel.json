@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "cors-bypass",
+  "builds": [
+    {
+      "src": "nodejs/build/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "nodejs/build/index.js"
+    }
+  ]
+}
