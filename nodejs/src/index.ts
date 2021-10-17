@@ -1,14 +1,12 @@
-import * as bodyParser from "body-parser";
 import express from "express";
 import request from "request";
 import URL from "url";
 
 const app = express();
 
-const limit = typeof process.argv[2] != "undefined" ? process.argv[2] : "100kb";
-console.log("Using limit: ", limit);
-
-app.use(bodyParser.json({ limit: limit }));
+// const limit = typeof process.argv[2] != "undefined" ? process.argv[2] : "100kb";
+// console.log("Using limit: ", limit);
+// app.use(bodyParser.json({ limit: limit }));
 
 app.all("*", function (req, res) {
   // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
