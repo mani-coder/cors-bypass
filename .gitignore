@@ -3,3 +3,5 @@
 .venv
 deploy.sh
 .vscode
+
+.vercel
