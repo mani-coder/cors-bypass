@@ -31,7 +31,6 @@ app.all("*", function (req, res) {
     res.send();
   } else {
     const parsedUrl = URL.parse(req.url);
-    console.log("mani is cool", parsedUrl);
     if (!parsedUrl.path || parsedUrl.path === "/") {
       res.status(500);
       res.send({ error: "Append your URL to the end of the cors-bypass URL." });
