@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon",
+    "vercel-build": "npm run build",
     "build": "rimraf ./build && tsc",
     "start": "node build/index.js",
     "lint": "eslint . --ext .ts"
