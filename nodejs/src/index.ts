@@ -29,18 +29,24 @@ app.all("*", function (req, res) {
     res.send();
   } else {
     const parsedUrl = URL.parse(req.url);
-    const targetURL = parsedUrl.path?.slice(1);
-    if (!targetURL) {
+    if (!parsedUrl.path) {
       res.status(500);
-      res.send({ error: "Append your url to the end of the cors-bypass URL." });
+      res.send({ error: "Append your URL to the end of the cors-bypass URL." });
       return;
     }
 
+    let url = parsedUrl.path.slice(1);
+    if (!url.includes("https://")) {
+      url = url.replace("https:/", "https://");
+    } else if (!url.includes("http://")) {
+      url = url.replace("http:/", "http://");
+    }
+
+    console.info("Target URL: ", url);
     request({
-      url: targetURL + req.url,
+      url,
       method: req.method,
       json: req.body,
-      headers: { Authorization: req.header("Authorization") },
     }).pipe(res);
   }
 });
