@@ -12,11 +12,13 @@ app.all("*", function (req, res) {
   // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    req.header("access-control-request-headers")
-  );
-  res.header("Cache-Control", "public, max-age=3600");
+  if (req.header("access-control-request-headers")) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      req.header("access-control-request-headers")
+    );
+  }
+  res.header("cache-control", "public, max-age=3600");
 
   // skip favicon.ico.
   if (req.path === "/favicon.ico") {
@@ -29,7 +31,8 @@ app.all("*", function (req, res) {
     res.send();
   } else {
     const parsedUrl = URL.parse(req.url);
-    if (!parsedUrl.path) {
+    console.log("mani is cool", parsedUrl);
+    if (!parsedUrl.path || parsedUrl.path === "/") {
       res.status(500);
       res.send({ error: "Append your URL to the end of the cors-bypass URL." });
       return;
