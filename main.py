@@ -1,6 +1,7 @@
 import logging
 from urllib.parse import ParseResult, urlparse
 
+import markdown
 import requests
 
 # Flask Imports
@@ -42,7 +43,9 @@ def main(request: Request):
         return ("", 204, headers)
 
     if len(request.path) <= 1:
-        return "OK", 200
+        return markdown.markdown(
+            open("README.md", "r").read(), extensions=["fenced_code"]
+        )
 
     url = f"{request.path[1:]}?{request.query_string.decode('utf-8')}"
     parsed_url: ParseResult = urlparse(url)

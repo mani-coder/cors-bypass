@@ -1,3 +1,4 @@
 # Function dependencies, for example:
 # package>=version
 requests>=2.18.0
+markdown>=3.3.4
