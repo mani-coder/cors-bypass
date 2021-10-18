@@ -1,62 +1,36 @@
-import express from "express";
-import request from "request";
-import URL from "url";
+import { createServer } from "cors-anywhere";
 
-const app = express();
+// Listen on a specific port via the PORT environment variable
+const port = process.env.PORT || 3000;
 
-// const limit = typeof process.argv[2] != "undefined" ? process.argv[2] : "100kb";
-// console.log("Using limit: ", limit);
-// app.use(bodyParser.json({ limit: limit }));
+// Grab the blacklist from the command-line so that we can update the blacklist without deploying
+// again. CORS Anywhere is open by design, and this blacklist is not used, except for countering
+// immediate abuse (e.g. denial of service). If you want to block all origins except for some,
+// use originWhitelist instead.
+const originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
+const originWhitelist = parseEnvList(process.env.CORSANYWHERE_WHITELIST);
 
-app.all("*", function (req, res) {
-  // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
-  if (req.header("access-control-request-headers")) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      req.header("access-control-request-headers")
-    );
-  }
-  res.header("cache-control", "public, max-age=3600");
+function parseEnvList(env?: string) {
+  return env ? env.split(",") : [];
+}
 
-  // skip favicon.ico.
-  if (req.path === "/favicon.ico") {
-    res.send();
-    return;
-  }
-
-  if (req.method === "OPTIONS") {
-    // CORS Preflight
-    res.send();
-  } else {
-    const parsedUrl = URL.parse(req.url);
-    if (!parsedUrl.path || parsedUrl.path === "/") {
-      res.status(500);
-      res.send({ error: "Append your URL to the end of the cors-bypass URL." });
-      return;
-    }
-
-    let url = parsedUrl.path.slice(1);
-    if (!url.includes("https://")) {
-      url = url.replace("https:/", "https://");
-    } else if (!url.includes("http://")) {
-      url = url.replace("http:/", "http://");
-    }
-
-    console.info("Target URL: ", url);
-    request({
-      url,
-      method: req.method,
-      json: req.body,
-    }).pipe(res);
-  }
+createServer({
+  originBlacklist: originBlacklist,
+  originWhitelist: originWhitelist,
+  requireHeader: [],
+  removeHeaders: [
+    "cookie",
+    "cookie2",
+    "x-request-start",
+    "x-request-id",
+    "via",
+    "connect-time",
+    "total-route-time",
+  ],
+  redirectSameOrigin: true,
+  httpProxyOptions: {
+    xfwd: false,
+  },
+}).listen(port, function () {
+  console.log("Running CORS Bypass on : " + port);
 });
-
-app.set("port", process.env.PORT || 3000);
-
-app.listen(app.get("port"), function () {
-  console.log("Proxy server listening on port " + app.get("port"));
-});
-
-export default app;
