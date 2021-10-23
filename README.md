@@ -1,31 +1,31 @@
-### How to use CORS bypass?
 
-CORS ByPass URL: https://cors.mani-coder.dev/
-
-Just append the original URL to end of the CORS bypass URL and you are good to go. However there is a catch to this, you need to replace the double slash after http or https (http://) with single slash to make it work.
-
-For example:
-Original URL: https://example.com
-
-To fetch data using cors-bypass, you need to use the URL like below:
+**https://cors.mani-coder.dev/ API enables cross-origin requests to anywhere.**
 
 ```
-https://cors.mani-coder.dev/https:/example.com
+Usage:
+
+/               Shows help
+/iscorsneeded   This is the only resource on this host which is served without CORS headers.
+/<url>          Create a request to <url>, and includes CORS headers in the response.
 ```
 
-Simply you have to do this in your code:
-https://cors.mani-coder.dev/<your_url.replace('//', '/')>
+If the protocol is omitted, it defaults to http (https if port 443 is specified).
 
-```
-export function buildCorsFreeUrl(target: string): string {
-  return `https://cors.mani-coder.dev/${target.replace('//', '/')}`;
-}
+**Cookies are disabled and stripped from requests.**
 
-fetch(
-   buildCorsFreeUrl("https://api-to-fetch/")
-).then(
-   ...
-).catch(
-   ...
-)
-```
+Redirects are automatically followed. For debugging purposes, each followed redirect results
+in the addition of a X-CORS-Redirect-n header, where n starts at 1. These headers are not
+accessible by the XMLHttpRequest API.
+After 5 redirects, redirects are not followed any more. The redirect response is sent back
+to the browser, which can choose to follow the redirect (handled automatically by the browser).
+
+The requested URL is available in the X-Request-URL response header.
+The final URL, after following all redirects, is available in the X-Final-URL response header.
+
+
+To prevent the use of the proxy for casual browsing, the API requires either the Origin
+or the X-Requested-With header to be set. To avoid unnecessary preflight (OPTIONS) requests,
+it's recommended to not manually set these headers in your code.
+
+
+_Documentation :   https://github.com/Rob--W/cors-anywhere/#documentation_
