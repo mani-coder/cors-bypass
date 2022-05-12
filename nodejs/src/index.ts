@@ -42,6 +42,9 @@ createServer({
       // handle the request.
       return false;
     } else {
+      console.debug(`Blocked proxy request for ${location.hostname}`, {
+        location,
+      });
       res.writeHead(403, "Forbidden");
       res.end(
         `The request host "${location.hostname}" isn't allowed by the operator for proxy, reach out to the developer.`
