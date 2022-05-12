@@ -14,8 +14,9 @@ function parseEnvList(env?: string) {
 const originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
 const originWhitelist = parseEnvList(process.env.CORSANYWHERE_WHITELIST);
 const ALLOWED_PROXY_HOSTS = parseEnvList(process.env.ALLOWED_PROXY_HOSTS);
-
-console.log("ALLOWED_PROXY_HOSTS", ALLOWED_PROXY_HOSTS);
+if (ALLOWED_PROXY_HOSTS.length) {
+  ALLOWED_PROXY_HOSTS.push("iscorsneeded");
+}
 
 createServer({
   originBlacklist,
@@ -36,6 +37,7 @@ createServer({
   },
   handleInitialRequest: (req, res, location) => {
     if (
+      !location ||
       ALLOWED_PROXY_HOSTS.length === 0 ||
       ALLOWED_PROXY_HOSTS.indexOf(location.hostname) >= 0
     ) {
