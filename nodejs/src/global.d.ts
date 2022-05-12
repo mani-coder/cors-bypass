@@ -1,5 +1,6 @@
 declare module "cors-anywhere" {
-  import { Server } from "http";
+  import type { ClientRequest, Server, ServerResponse } from "http";
+  import type { URL } from "url";
 
   export function createServer(
     options?: Partial<{
@@ -73,6 +74,18 @@ declare module "cors-anywhere" {
        * need to pass options to `http-proxy`.
        */
       httpProxyOptions: object;
+
+      /**
+       * If set, it is called with the request, response and a parsed URL of the requested destination
+       * (null if unavailable). If the function returns true, the request will not be handled further.
+       * Then the function is responsible for handling the request. This feature can be used to passively monitor
+       * requests, for example for logging (return false).
+       */
+      handleInitialRequest: (
+        req: ClientRequest,
+        res: ServerResponse,
+        location: URL
+      ) => boolean;
 
       /**
        * If set, a `https.Server` will be created. The given options are passed to the
