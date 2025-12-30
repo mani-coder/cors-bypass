@@ -78,7 +78,7 @@ export async function proxyRequest(
     }
 
     // Set proper host header
-    headers.host = url.host;
+    headers["host"] = url.host;
 
     // Make the request
     const response = await makeRequest(url, {
@@ -91,7 +91,7 @@ export async function proxyRequest(
       response.statusCode &&
       response.statusCode >= 300 &&
       response.statusCode < 400 &&
-      response.headers.location
+      response.headers["location"]
     ) {
       if (redirectCount >= maxRedirects) {
         // Return the redirect response to the client
@@ -104,7 +104,7 @@ export async function proxyRequest(
       }
 
       // Follow redirect
-      const location = response.headers.location as string;
+      const location = response.headers["location"] as string;
       const newUrl = new URL(location, url);
       redirectChain.push(url.toString());
       url = newUrl;
