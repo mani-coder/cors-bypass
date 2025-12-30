@@ -1,7 +1,46 @@
-*.pyc
-.env.yaml
-.venv
-deploy.sh
-.vscode
+# Dependencies
+node_modules/
 
+# Build output
+build/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.yaml
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Vercel
 .vercel
+
+# Python virtual environment (if any)
+.venv/
+venv/
+
+# Deploy scripts
+deploy.sh

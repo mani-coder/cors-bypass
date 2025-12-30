@@ -1,0 +1,45 @@
+{
+  "name": "cors-bypass",
+  "version": "1.0.0",
+  "description": "CORS ByPass URL: https://cors.mani-coder.dev/",
+  "type": "module",
+  "main": "build/index.js",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "PORT=4000 tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node build/index.js",
+    "type-check": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "clean": "rimraf build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mani-coder/cors-bypass.git"
+  },
+  "keywords": ["cors", "proxy", "bypass", "cors-proxy", "http-proxy"],
+  "author": "Elayamani Krishnamoorthi <k.elayamani@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mani-coder/cors-bypass/issues"
+  },
+  "homepage": "https://github.com/mani-coder/cors-bypass#readme",
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "^2.1.8",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  }
+}
