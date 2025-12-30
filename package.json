@@ -3,14 +3,13 @@
   "version": "1.0.0",
   "description": "CORS ByPass URL: https://cors.mani-coder.dev/",
   "type": "module",
-  "main": "build/index.js",
   "engines": {
     "node": ">=24.0.0"
   },
   "scripts": {
     "dev": "PORT=4000 tsx watch src/index.ts",
-    "build": "tsc",
-    "vercel-build": "npm run build",
+    "build": "echo 'No build needed'",
+    "build:local": "tsc",
     "start": "PORT=4001 node build/index.js",
     "type-check": "tsc --noEmit",
     "lint": "biome check .",
