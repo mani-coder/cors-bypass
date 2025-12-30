@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "PORT=4000 tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node build/index.js",
+    "start": "PORT=4001 node build/index.js",
     "type-check": "tsc --noEmit",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -24,7 +24,13 @@
     "type": "git",
     "url": "git+https://github.com/mani-coder/cors-bypass.git"
   },
-  "keywords": ["cors", "proxy", "bypass", "cors-proxy", "http-proxy"],
+  "keywords": [
+    "cors",
+    "proxy",
+    "bypass",
+    "cors-proxy",
+    "http-proxy"
+  ],
   "author": "Elayamani Krishnamoorthi <k.elayamani@gmail.com>",
   "license": "ISC",
   "bugs": {

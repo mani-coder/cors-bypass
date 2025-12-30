@@ -2,6 +2,7 @@
   "version": 2,
   "name": "cors-bypass",
   "buildCommand": "npm run build",
+  "outputDirectory": "build",
   "builds": [
     {
       "src": "build/index.js",
