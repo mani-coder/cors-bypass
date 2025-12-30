@@ -1,17 +1,18 @@
 {
   "version": 2,
-  "name": "cors-bypass",
-  "buildCommand": "npm run build",
   "builds": [
     {
-      "src": "build/index.js",
-      "use": "@vercel/node"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "build/index.js"
+      "dest": "/index.js"
     }
   ]
 }

@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "PORT=4000 tsx watch src/index.ts",
     "build": "tsc",
+    "vercel-build": "npm run build",
     "start": "PORT=4001 node build/index.js",
     "type-check": "tsc --noEmit",
     "lint": "biome check .",
